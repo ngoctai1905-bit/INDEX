@@ -1,0 +1,294 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Trắc nghiệm GDĐP 12</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: một cột 760px, thẻ câu hỏi lớn ở giữa, dải số câu ở trên để nhảy câu */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --fg:#14202e; --muted:#5b6b7c; --line:#dbe2ea;
+  --accent:#0b5fa5; --accent-fg:#ffffff; --accent-soft:#e3eefa;
+  --ok:#17803d; --ok-soft:#e1f4e7; --bad:#b42318; --bad-soft:#fde8e6; --warn:#a15c00;
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1720; --surface:#17222e; --fg:#e8eef5; --muted:#93a3b5; --line:#2a394a;
+  --accent:#5aa9ec; --accent-fg:#06121f; --accent-soft:#1b3047;
+  --ok:#4cc27a; --ok-soft:#14301f; --bad:#ff8a80; --bad-soft:#3a1b19; --warn:#f0b050; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1720; --surface:#17222e; --fg:#e8eef5; --muted:#93a3b5; --line:#2a394a;
+  --accent:#5aa9ec; --accent-fg:#06121f; --accent-soft:#1b3047;
+  --ok:#4cc27a; --ok-soft:#14301f; --bad:#ff8a80; --bad-soft:#3a1b19; --warn:#f0b050; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.55;
+  padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(1.5rem,5vw,2rem);font-weight:800;line-height:1.2;text-wrap:balance}
+h2{font-size:1.2rem;font-weight:700;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:11px 18px;font-weight:600;min-height:44px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spread{justify-content:space-between}
+
+/* start */
+.hero{display:flex;flex-direction:column;gap:8px;padding-block:8px}
+.opts{display:grid;gap:10px}
+.choice{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.choice[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.choice .dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);margin-top:3px;display:grid;place-items:center}
+.choice[aria-checked="true"] .dot{border-color:var(--accent)}
+.choice[aria-checked="true"] .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.choice b{display:block}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.9rem;font-weight:600;background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.field{display:flex;flex-direction:column;gap:10px}
+.field>.lbl{font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:center;font-weight:500}
+.check input{width:20px;height:20px;accent-color:var(--accent)}
+
+/* quiz */
+.top{display:flex;flex-direction:column;gap:12px}
+.bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.stats{display:flex;justify-content:space-between;gap:12px;font-size:.9rem;font-weight:600;flex-wrap:wrap}
+.nav{display:flex;flex-wrap:wrap;gap:6px}
+.nav button{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums;padding:0}
+.nav button.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.nav button.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.nav button.cur{outline:3px solid var(--accent);outline-offset:1px}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.tag.lvl-thong_hieu{background:var(--ok-soft);color:var(--ok)}
+.tag.lvl-van_dung{background:var(--bad-soft);color:var(--bad)}
+.q{font-size:1.1rem;font-weight:600;line-height:1.55;margin-block:12px 18px;text-wrap:pretty}
+.answers{display:grid;gap:10px}
+.ans{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}
+.ans:not([disabled]):hover{border-color:var(--accent);background:var(--accent-soft)}
+.ans .k{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:.9rem;background:var(--bg);border:1px solid var(--line)}
+.ans .t{min-width:0;overflow-wrap:anywhere;padding-top:3px}
+.ans[disabled]{cursor:default}
+.ans.right{border-color:var(--ok);background:var(--ok-soft)}
+.ans.right .k{background:var(--ok);border-color:var(--ok);color:#fff}
+.ans.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.ans.wrong .k{background:var(--bad);border-color:var(--bad);color:#fff}
+.ans .m{margin-left:auto;flex:none;font-size:.8rem;font-weight:700;padding-top:5px}
+.ans.right .m{color:var(--ok)} .ans.wrong .m{color:var(--bad)}
+.fb{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--bg);border-left:4px solid var(--muted)}
+.fb.ok{border-color:var(--ok)} .fb.bad{border-color:var(--bad)}
+.fb strong{display:block;margin-bottom:4px}
+.fb.ok strong{color:var(--ok)} .fb.bad strong{color:var(--bad)}
+.fb p{font-size:.95rem;white-space:pre-line}
+
+/* result */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score .n{font-size:3.2rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.lv{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.lv>div{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.lv b{font-size:1.3rem;font-variant-numeric:tabular-nums;display:block}
+.rv{display:grid;gap:10px}
+.rv details{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.rv summary{cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;list-style:none}
+.rv summary::-webkit-details-marker{display:none}
+.rv summary .s{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:.8rem;font-weight:800;color:#fff}
+.rv .s.ok{background:var(--ok)} .rv .s.bad{background:var(--bad)}
+.rv summary span:last-child{min-width:0;font-weight:500}
+.rv .body{padding:0 14px 14px;display:grid;gap:8px;font-size:.95rem}
+.rv .body p{white-space:pre-line}
+.themebtn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;font-size:.8rem;font-weight:600}
+.send input{font:inherit;color:var(--fg);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px;width:100%;min-width:0}
+.send .two{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.send a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.send a.btn.off{opacity:.45;pointer-events:none}
+@media (max-width:480px){.send .two{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:480px){.card{padding:16px}.q{font-size:1.03rem}}
+</style>
+<div class="wrap" id="app"></div>
+<script>
+const DATA = [{"id": 1, "topic": "lao_dong", "level": "nhan_biet", "q": "Theo dự báo của Trung tâm Dịch vụ việc làm TP.HCM, thị trường lao động của Thành phố (sau khi hợp nhất với Bình Dương và Bà Rịa – Vũng Tàu) năm 2026 có đặc điểm nào sau đây?", "opts": ["Cung lao động vượt cầu lao động, số người tìm việc cao hơn số vị trí doanh nghiệp cần tuyển.", "Cung và cầu lao động xấp xỉ nhau ở hầu hết các nhóm ngành và các khu vực của Thành phố.", "Cầu lao động vượt cung lao động, nhu cầu tuyển dụng khoảng 1,6 lần số người tìm việc.", "Cầu lao động chỉ vượt cung ở khu vực công nghiệp, còn ở khu vực dịch vụ thì cung vượt cầu."], "answer": 2, "exp": "Năm 2025 toàn vùng có 313.681 vị trí tuyển dụng so với 191.790 người tìm việc (cầu gấp khoảng 1,64 lần cung); năm 2026 tiếp tục ở trạng thái “cầu vượt cung”, hơn 313.000 lao động. Cả TP.HCM (cũ), Bình Dương (cũ) và Bà Rịa – Vũng Tàu (cũ) đều có cầu lớn hơn cung nên phương án D sai."}, {"id": 2, "topic": "lao_dong", "level": "nhan_biet", "q": "Cặp khu vực – đặc điểm nhu cầu lao động nào sau đây đúng với TP.HCM sau hợp nhất?", "opts": ["Bà Rịa – Vũng Tàu (cũ) – nhu cầu gắn với cảng biển, logistics, vận tải và dịch vụ cảng.", "TP.HCM (cũ) – nhu cầu lớn về lao động phổ thông và vận hành dây chuyền tại các khu công nghiệp tập trung.", "Bình Dương (cũ) – nhu cầu tập trung ở cảng biển, vận tải đường thủy và các dịch vụ hỗ trợ cảng.", "Bình Dương (cũ) – nhu cầu tập trung ở tài chính, công nghệ thông tin và thương mại điện tử."], "answer": 0, "exp": "TP.HCM (cũ): trung tâm dịch vụ – tài chính – công nghệ (văn phòng, tài chính, CNTT, thương mại điện tử, bán lẻ…). Bình Dương (cũ): “thủ phủ công nghiệp”, nhu cầu cao về lao động phổ thông và vận hành dây chuyền. Bà Rịa – Vũng Tàu (cũ): cảng biển, dầu khí, logistics, du lịch (cụm cảng Cái Mép – Thị Vải). Ba phương án nhiễu đều là các cặp bị hoán đổi đặc điểm giữa các khu vực."}, {"id": 3, "topic": "lao_dong", "level": "nhan_biet", "q": "Theo Kế hoạch triển khai Chiến lược Lao động và Việc làm của TP.HCM, chỉ tiêu tạo mới việc làm được đặt ra là bao nhiêu?", "opts": ["90.000 việc làm trong năm 2026 và khoảng 450.000 việc làm trong cả giai đoạn 2026 – 2030.", "180.000 việc làm trong năm 2026 và khoảng 450.000 việc làm trong cả giai đoạn 2026 – 2030.", "313.000 việc làm trong năm 2026 và khoảng 900.000 việc làm trong cả giai đoạn 2026 – 2030.", "180.000 việc làm trong năm 2026 và khoảng 900.000 việc làm trong giai đoạn 2026 – 2030."], "answer": 3, "exp": "Kế hoạch đặt mục tiêu 180.000 việc làm mới năm 2026 và khoảng 900.000 việc làm giai đoạn 2026–2030. Con số 313.000 là nhu cầu tuyển dụng dự báo của doanh nghiệp, không phải chỉ tiêu tạo việc làm mới (phương án C nhầm hai khái niệm)."}, {"id": 4, "topic": "lao_dong", "level": "thong_hieu", "q": "Năm 2025, nhu cầu tuyển dụng của khu vực Bà Rịa – Vũng Tàu (cũ) chiếm khoảng 23% toàn vùng, trong khi số người tìm việc của khu vực này chỉ chiếm khoảng 7,29%. Thông tin này cho thấy điều gì?", "opts": ["Khu vực dư thừa lao động nên cần đưa bớt lao động sang các khu vực khác của Thành phố làm việc.", "Khu vực phụ thuộc nhiều vào lao động từ nơi khác đến để đáp ứng nhu cầu tuyển dụng.", "Khu vực có chất lượng lao động cao nên doanh nghiệp chỉ cần một số lượng nhỏ người tìm việc.", "Khu vực có thị trường lao động cân đối hơn Bình Dương (cũ) và TP.HCM (cũ) trong năm 2025."], "answer": 1, "exp": "Tỉ trọng cầu (23%) lớn gấp hơn ba lần tỉ trọng cung (7,29%) cho thấy cầu vượt xa cung tại chỗ; bài viết kết luận khu vực phụ thuộc lớn vào lao động nhập cư. Đây là khu vực thiếu cung chứ không dư cung, và lệch pha lớn hơn (không cân đối hơn) so với hai khu vực còn lại."}, {"id": 5, "topic": "lao_dong", "level": "thong_hieu", "q": "Bài viết về xu hướng nghề nghiệp nêu: trong nhu cầu nhân lực qua đào tạo của TP.HCM giai đoạn 2025 – 2030, trình độ đại học chiếm khoảng 25%, cao đẳng 23%, trung cấp 32% và sơ cấp 20%. Nhận định nào sau đây đúng?", "opts": ["Trình độ đại học có nhu cầu cao nhất vì đây là trình độ đào tạo cao nhất trong hệ thống giáo dục.", "Nhu cầu cao đẳng và đại học (khoảng 48%) cao hơn nhu cầu trung cấp và sơ cấp, nên cần giảm đào tạo nghề.", "Nhu cầu trung cấp và sơ cấp (khoảng 52%) cao hơn nhu cầu cao đẳng và đại học (khoảng 48%).", "Trình độ sơ cấp có nhu cầu thấp nhất nên không cần mở rộng đào tạo nghề ngắn hạn cho người lao động."], "answer": 2, "exp": "Trung cấp (32%) là trình độ có nhu cầu cao nhất; trung cấp + sơ cấp = 52% > cao đẳng + đại học = 48%. Phương án D đúng ở vế đầu (sơ cấp 20% là thấp nhất) nhưng kết luận “không cần mở rộng đào tạo nghề” không có căn cứ trong tài liệu."}, {"id": 6, "topic": "lao_dong", "level": "thong_hieu", "q": "Tài liệu nêu: năm 2026 doanh nghiệp dự báo cần hơn 313.000 lao động; chỉ tiêu tạo mới việc làm của Thành phố là 180.000 việc làm năm 2026 và khoảng 900.000 việc làm giai đoạn 2026 – 2030. Cách hiểu nào sau đây đúng?", "opts": ["Chỉ tiêu 180.000 bằng mức bình quân mỗi năm của chỉ tiêu 900.000; còn 313.000 là nhu cầu tuyển dụng dự báo của doanh nghiệp.", "Hai số 313.000 và 180.000 đều là nhu cầu tuyển dụng của doanh nghiệp nên có thể cộng lại để tính tổng nhu cầu năm 2026.", "Hiệu số 313.000 – 180.000 là số người thất nghiệp mà Thành phố dự kiến sẽ có trong năm 2026 sau khi thực hiện chỉ tiêu.", "Chỉ tiêu 900.000 gấp 4 lần chỉ tiêu 180.000 vì Thành phố dự kiến thực hiện chỉ tiêu này trong 4 năm."], "answer": 0, "exp": "Giai đoạn 2026–2030 gồm 5 năm: 900.000 : 5 = 180.000 việc làm/năm, đúng bằng chỉ tiêu năm 2026. 313.000 là số vị trí doanh nghiệp cần tuyển (cầu), 180.000 là mục tiêu tạo việc làm mới của Thành phố – hai đại lượng khác bản chất, không cộng hay trừ để suy ra số thất nghiệp. 900.000 gấp 5 (không phải 4) lần 180.000."}, {"id": 7, "topic": "lao_dong", "level": "thong_hieu", "q": "Một trong những nhiệm vụ trọng tâm của Trung tâm Dịch vụ việc làm TP.HCM năm 2026 là điều tiết lao động từ khu vực dư cung sang khu vực thiếu cung, từ ngành truyền thống sang logistics, cảng và dịch vụ chất lượng cao. Nhiệm vụ này xuất phát chủ yếu từ thực trạng nào?", "opts": ["Tổng số người tìm việc của toàn Thành phố đã vượt xa tổng số vị trí tuyển dụng của các doanh nghiệp.", "Cung – cầu lệch pha theo khu vực và theo ngành: có nơi thiếu hụt lớn, nơi khác người tìm việc tập trung.", "Doanh nghiệp ở tất cả các khu vực đều giảm nhu cầu tuyển dụng do đẩy mạnh tự động hóa sản xuất.", "Người lao động có xu hướng không muốn làm việc ở khu vực công nghiệp và các khu vực cảng biển."], "answer": 1, "exp": "Thách thức đầu tiên được nêu là lệch pha cung – cầu theo khu vực: TP.HCM (cũ) có 116.011 người tìm việc (hơn 60% tổng cung), Bình Dương (cũ) và Bà Rịa – Vũng Tàu (cũ) thiếu lao động. Toàn vùng cầu vượt cung (A sai); cầu còn tăng ở logistics, cảng (C sai); D không có căn cứ trong tài liệu."}, {"id": 8, "topic": "lao_dong", "level": "van_dung", "q": "Số liệu năm 2025: toàn vùng có 313.681 vị trí tuyển dụng và 191.790 người tìm việc. Riêng Bà Rịa – Vũng Tàu (cũ) có nhu cầu tuyển dụng chiếm 23% tổng cầu và số người tìm việc chiếm 7,29% tổng cung. Nhu cầu tuyển dụng của khu vực này gấp khoảng bao nhiêu lần số người tìm việc? (làm tròn đến một chữ số thập phân)", "opts": ["Khoảng 0,3 lần.", "Khoảng 1,6 lần.", "Khoảng 3,2 lần.", "Khoảng 5,2 lần."], "answer": 3, "exp": "Cầu ≈ 23% × 313.681 ≈ 72.150 vị trí; cung ≈ 7,29% × 191.790 ≈ 13.980 người; tỉ lệ cầu/cung ≈ 5,2. Phương án C (3,2) là bẫy: lấy 23% : 7,29% – đây là tỉ lệ giữa hai tỉ trọng, không phải tỉ lệ cầu/cung vì tổng cầu và tổng cung khác nhau; B (1,6) là tỉ lệ cầu/cung chung của toàn vùng; A (0,3) là nghịch đảo của 3,2."}, {"id": 9, "topic": "lao_dong", "level": "van_dung", "q": "Một phường thuộc TP.HCM (cũ) có nhiều người tìm việc từng làm nhân viên bán hàng truyền thống. Trong khi đó, các doanh nghiệp logistics tại khu vực cảng thuộc Bà Rịa – Vũng Tàu (cũ) đang thiếu nhân viên kho biết quét mã và cập nhật tồn kho. Trung tâm dịch vụ việc làm cần xử lí đồng thời sự lệch pha về địa bàn và về kỹ năng. Giải pháp nào hợp lí nhất?", "opts": ["Đăng tin tuyển nhân viên kho tại phường và tổ chức phiên giao dịch liên khu vực, ưu tiên ứng viên có nhiều năm kinh nghiệm bán hàng.", "Mở lớp kỹ năng quét mã và quản lí tồn kho cho nhóm bán hàng, sau đó giới thiệu họ vào các vị trí bán lẻ còn trống tại phường.", "Khảo sát yêu cầu của doanh nghiệp kho, đào tạo ngắn hạn kỹ năng còn thiếu rồi kết nối phỏng vấn liên khu vực.", "Đề nghị doanh nghiệp logistics hạ yêu cầu về kỹ năng kho để nhận ngay ứng viên bán hàng, không cần đào tạo thêm gì."], "answer": 2, "exp": "Tình huống có hai chiều lệch pha: địa bàn (TP.HCM cũ ↔ Bà Rịa – Vũng Tàu cũ) và kỹ năng (bán hàng truyền thống ↔ nghiệp vụ kho). Chỉ phương án đúng xử lí cả hai: khảo sát nhu cầu → đào tạo kỹ năng thiếu → kết nối liên khu vực, phù hợp nhiệm vụ điều tiết lao động từ ngành truyền thống sang logistics, cảng. A chỉ xử lí địa bàn và còn bỏ qua khoảng trống kỹ năng; B chỉ xử lí kỹ năng nhưng không đưa ứng viên tới nơi thiếu lao động; D bỏ qua yêu cầu thực tế của doanh nghiệp."}, {"id": 10, "topic": "lao_dong", "level": "van_dung", "q": "Anh K. (40 tuổi) làm nhập liệu thủ công tại một nhà máy ở Bình Dương (cũ). Nhà máy đang tự động hóa nên vị trí của anh có nguy cơ bị cắt giảm. Thấy lao động phổ thông hiện chiếm khoảng 39,8% nhu cầu tuyển dụng, anh định xin chuyển sang một công việc lặp lại, ít chuyên môn khác. Dựa vào xu hướng nghề nghiệp 5 năm tới, lời khuyên nào hợp lí nhất?", "opts": ["Nên học ngắn hạn kỹ năng số, kỹ năng vận hành và bảo trì thiết bị tự động theo yêu cầu thực tế của doanh nghiệp.", "Nên theo kế hoạch đó vì nhu cầu lao động phổ thông vẫn cao nên các công việc lặp lại sẽ không bị tự động hóa thay thế.", "Nên đăng kí học đại học chính quy để có bằng cấp trước, vì doanh nghiệp xét bằng cấp trước kỹ năng và thái độ.", "Nên chờ nhà máy cắt giảm rồi mới tìm hiểu nghề mới, vì các công việc lặp lại sẽ sớm tăng trở lại."], "answer": 0, "exp": "Xu hướng 5 năm tới: công việc lặp lại, ít chuyên môn giảm; tăng ở tự động hóa, dữ liệu, logistics…; doanh nghiệp “tuyển thái độ trước, kỹ năng sau, bằng cấp sau cùng” và coi trọng năng lực thực hành, kỹ năng số, khả năng thích ứng. Tỉ lệ 39,8% chỉ phản ánh nhu cầu hiện tại nên chưa đủ để chọn hướng đi (B sai); C đảo ngược thứ tự ưu tiên của doanh nghiệp; D thụ động và trái xu hướng."}, {"id": 11, "topic": "giao_thong", "level": "nhan_biet", "q": "Theo các tài liệu về hạ tầng giao thông TP.HCM, tuyến đường sắt đô thị đầu tiên được đưa vào khai thác thương mại (từ ngày 22/12/2024) là tuyến nào?", "opts": ["Metro số 2 (Bến Thành – Tham Lương).", "Metro số 3A (Bến Thành – Tân Kiên).", "Tuyến Metro số 1 nối dài đến Thành phố mới Bình Dương.", "Metro số 1 (Bến Thành – Suối Tiên)."], "answer": 3, "exp": "Metro số 1 dài gần 20 km, khai thác từ cuối năm 2024 (22/12/2024). Metro số 2 mới khởi công; phần nối dài sang Thành phố mới Bình Dương (khoảng 33 km) mới đặt mục tiêu hoàn thành năm 2030."}, {"id": 12, "topic": "giao_thong", "level": "nhan_biet", "q": "Theo Quy hoạch tổng thể TP.HCM tầm nhìn 100 năm, mô hình hầm “lưỡng dụng” trong phát triển không gian ngầm có hai chức năng nào?", "opts": ["Vừa phục vụ giao thông, vừa lưu trữ hàng hóa cho các cảng biển và các trung tâm logistics lớn.", "Vừa phục vụ giao thông, vừa tiêu thoát nước và tạm chứa nước khi mưa lớn, triều cường.", "Vừa phục vụ giao thông, vừa đặt hệ thống cấp điện và cấp nước cho các khu công nghiệp lớn.", "Vừa làm bãi đỗ xe ngầm, vừa làm không gian thương mại quanh các nhà ga metro lớn."], "answer": 1, "exp": "Hầm “lưỡng dụng” vừa phục vụ giao thông vừa tiêu thoát nước; khi mưa lớn cực đoan hoặc triều cường vượt tần suất thiết kế, hầm tạm chuyển thành không gian chứa nước, giảm đỉnh ngập khu trung tâm. Bãi đỗ xe, thương mại quanh ga là chức năng của tầng nông trong tổ hợp ngầm quanh ga metro, không phải hầm lưỡng dụng."}, {"id": 13, "topic": "giao_thong", "level": "nhan_biet", "q": "Theo bài viết về vai trò giao thông trong phát triển siêu đô thị mới, các cảng biển Cát Lái, Cái Mép – Thị Vải cùng mạng lưới cảng cạn (ICD) dọc các tuyến vành đai là điều kiện để hình thành loại hình nào?", "opts": ["Logistics đa phương thức.", "Hệ thống đô thị vệ tinh phụ thuộc vào giao thông “con thoi”.", "Mạng lưới không gian ngầm đa tầng ở khu vực trung tâm.", "Mạng lưới xe buýt điện liên tỉnh thay thế vận tải đường bộ."], "answer": 0, "exp": "Bài viết nêu các cảng biển (Cát Lái, Cái Mép – Thị Vải) và mạng lưới cảng cạn dọc vành đai là điều kiện hình thành logistics đa phương thức. Đô thị vệ tinh “con thoi” là mô hình cần thay bằng các đô thị đối trọng (đa trung tâm)."}, {"id": 14, "topic": "giao_thong", "level": "thong_hieu", "q": "Khi khai thác đất đai gắn với phát triển giao thông và đô thị theo mô hình TOD (phát triển đô thị theo định hướng giao thông công cộng, gắn với các nhà ga), yêu cầu nào sau đây được nhấn mạnh?", "opts": ["Ưu tiên thu hồi đất quanh các nhà ga để chủ đầu tư được tự quyết định phương án sử dụng đất theo nhu cầu.", "Tập trung xây nhà ở cao tầng quanh nhà ga trước, các nội dung bồi thường và tái định cư xử lí sau.", "Đồng bộ quy hoạch giao thông, đô thị và sử dụng đất; bảo đảm bồi thường, hỗ trợ, tái định cư.", "Chỉ áp dụng ở khu vực lõi trung tâm hiện hữu, nơi giá đất cao nhất, để tối đa hóa nguồn thu."], "answer": 2, "exp": "Thường trực HĐND nhấn mạnh việc khai thác đất đai gắn với giao thông và đô thị (TOD) phải đồng bộ quy hoạch giao thông – đô thị – sử dụng đất và bảo đảm bồi thường, hỗ trợ, tái định cư; đồng thời minh bạch, hài hòa lợi ích. Quy hoạch không gian ngầm cũng tổ chức các tổ hợp quanh ga metro (bán kính kết nối 200–400 m), không giới hạn ở khu trung tâm."}, {"id": 15, "topic": "giao_thong", "level": "thong_hieu", "q": "Vì sao các tuyến vành đai, cao tốc liên vùng (như Vành đai 3, Vành đai 4) có thể đồng thời giảm áp lực giao thông đô thị và tăng kết nối vùng?", "opts": ["Vì chúng đưa phần lớn phương tiện liên vùng vào các tuyến đường trung tâm để phân tán lưu lượng giao thông.", "Vì chúng thay thế hoàn toàn nhu cầu đi lại bằng đường sắt đô thị trong khu vực nội thành của Thành phố.", "Vì chúng chỉ phục vụ vận chuyển hàng hóa nên không làm thay đổi lưu lượng phương tiện trong nội đô.", "Vì chúng giúp xe liên vùng, nhất là xe tải, đi vòng qua lõi đô thị và nối với các trục hướng tâm."], "answer": 3, "exp": "Vành đai 3, 4 và các cao tốc (TP.HCM – Mộc Bài, Biên Hòa – Vũng Tàu…) vừa giảm áp lực giao thông đô thị vừa kết nối khu công nghiệp, cảng biển, sân bay, trung tâm logistics: một phần dòng xe liên vùng không phải đi qua nội đô. Các phương án nhiễu đảo ngược hoặc bỏ qua cơ chế “đi vòng – phân luồng”."}, {"id": 16, "topic": "giao_thong", "level": "thong_hieu", "q": "Theo VnExpress, cao tốc TP.HCM – Long Thành – Dầu Giây (dài 55 km, hoàn thành năm 2015) đang được mở rộng lên 8–10 làn xe; cao tốc Biên Hòa – Vũng Tàu (gần 54 km) kết nối với sân bay Long Thành. Việc nâng cấp các tuyến này chủ yếu phản ánh yêu cầu nào?", "opts": ["Thay thế vai trò của đường sắt đô thị trong vận chuyển hành khách ở khu vực nội thành và các quận trung tâm.", "Giảm nhu cầu vận tải hàng hóa đi qua các cảng biển lớn của khu vực phía Nam để giảm tải cho cảng.", "Đáp ứng nhu cầu vận tải tăng của hành lang nối TP.HCM với các khu công nghiệp, cảng biển và sân bay phía Đông.", "Tập trung phương tiện vào lõi trung tâm TP.HCM để tăng hiệu quả khai thác các tuyến đường nội đô hiện hữu."], "answer": 2, "exp": "Đây là các trục liên vùng phía Đông, nối TP.HCM với Đồng Nai, Bà Rịa – Vũng Tàu (cũ), cụm cảng Cái Mép – Thị Vải và sân bay Long Thành – nơi nhu cầu vận tải hàng hóa và hành khách tăng nhanh nên cần nâng năng lực tuyến. Cao tốc liên vùng không thay thế metro nội thành và không nhằm dồn xe vào lõi đô thị."}, {"id": 17, "topic": "giao_thong", "level": "thong_hieu", "q": "Theo định hướng phân bổ vốn của Thành phố: khoảng 200.000 tỉ đồng cho 98 dự án giải quyết điểm nghẽn giao thông; 120.000 tỉ đồng cho 37 dự án kết nối liên vùng, liên tỉnh; 26.000 tỉ đồng cho 59 dự án giải quyết ngập; 58.000 tỉ đồng cho 59 dự án chỉnh trang đô thị ven sông, kênh, rạch. Nhận định nào sau đây đúng?", "opts": ["Nhóm điểm nghẽn có tổng vốn lớn nhất, còn nhóm liên vùng có vốn bình quân mỗi dự án lớn nhất.", "Nhóm điểm nghẽn giao thông có tổng vốn lớn nhất và cũng có vốn bình quân mỗi dự án lớn nhất.", "Nhóm kết nối liên vùng có tổng vốn lớn nhất vì có số dự án ít nhất trong bốn nhóm.", "Nhóm giải quyết ngập có vốn bình quân mỗi dự án lớn hơn nhóm chỉnh trang đô thị ven sông, kênh, rạch."], "answer": 0, "exp": "Vốn bình quân/dự án: điểm nghẽn ≈ 200.000 : 98 ≈ 2.040 tỉ; liên vùng ≈ 120.000 : 37 ≈ 3.240 tỉ; chống ngập ≈ 26.000 : 59 ≈ 440 tỉ; chỉnh trang ≈ 58.000 : 59 ≈ 980 tỉ. Tổng vốn lớn nhất là nhóm điểm nghẽn (200.000 tỉ). Vì vậy B, C, D đều sai."}, {"id": 18, "topic": "giao_thong", "level": "van_dung", "q": "Theo bài viết của HĐND TP.HCM, Thành phố định hướng dành khoảng 140.000 tỉ đồng vốn ngân sách cho các dự án PPP khởi công mới, hướng tới huy động khoảng 800.000 tỉ đồng từ nhà đầu tư. Nếu đạt kế hoạch, trung bình mỗi đồng vốn ngân sách trong các dự án này thu hút khoảng bao nhiêu đồng vốn từ nhà đầu tư? (làm tròn đến một chữ số thập phân)", "opts": ["Khoảng 0,2 đồng.", "Khoảng 5,7 đồng.", "Khoảng 6,7 đồng.", "Khoảng 8,6 đồng."], "answer": 1, "exp": "800.000 : 140.000 ≈ 5,7 đồng. Phương án C (6,7) là bẫy cộng cả vốn ngân sách vào tử số (940.000 : 140.000); D (8,6) là lấy 1,2 triệu tỉ đồng vốn đầu tư công chia cho 140.000 tỉ; A (0,2) là đảo ngược tỉ lệ (140 : 800 ≈ 0,18)."}, {"id": 19, "topic": "giao_thong", "level": "van_dung", "q": "Hai phương án đang được xem xét cho tuyến vận chuyển hàng từ khu công nghiệp ra cảng: (1) mở rộng các tuyến đường nội đô; (2) xây tuyến nối khu công nghiệp với cảng qua đường vành đai. Theo hướng đánh giá hiệu quả sau đầu tư mà HĐND Thành phố kiến nghị (không chỉ dựa vào tiến độ hay tỉ lệ giải ngân), cặp chỉ báo nào phù hợp nhất để so sánh hai phương án về mục tiêu kết nối và giảm áp lực nội đô?", "opts": ["Tỉ lệ giải ngân vốn đầu tư và tiến độ hoàn thành các hạng mục công trình của từng phương án.", "Chiều dài mặt đường xây mới, số làn xe được bổ sung và tổng mức đầu tư của từng phương án.", "Số doanh nghiệp đang hoạt động trong khu công nghiệp và số lượt tàu qua cảng mỗi năm.", "Thời gian xe tải đi từ khu công nghiệp tới cảng và lưu lượng xe tải qua các tuyến nội đô."], "answer": 3, "exp": "HĐND kiến nghị đánh giá hiệu quả dựa vào khả năng giảm ùn tắc, rút ngắn thời gian đi lại và giảm chi phí logistics. Hai chỉ báo ở phương án đúng là chỉ báo kết quả gắn trực tiếp với hai mục tiêu (kết nối: thời gian đi; giảm áp lực nội đô: lưu lượng xe tải qua nội đô). A, B là chỉ báo đầu vào/tiến độ; C không phụ thuộc vào việc chọn phương án nào."}, {"id": 20, "topic": "giao_thong", "level": "van_dung", "q": "Thông tin: Vành đai 2 còn khoảng 13,75 km chưa hoàn thành; ùn tắc vẫn phức tạp tại 9 khu vực cửa ngõ và trung tâm; tiêu chí ưu tiên dự án gồm khả năng giảm ùn tắc, tăng kết nối liên vùng, hiệu quả đầu tư và hạn chế đầu tư dàn trải. Trong điều kiện vốn hạn chế, phương án nào thể hiện đúng nguyên tắc ưu tiên?", "opts": ["Chia đều vốn cho mọi tuyến đường đang ùn tắc, bất kể mức độ, để khu vực nào cũng được cải thiện một phần.", "Ưu tiên hoàn thành đoạn còn thiếu của Vành đai 2 để khép kín tuyến, phân luồng cho các cửa ngõ và tránh dàn trải.", "Dồn vốn mở rộng đường trong lõi trung tâm, nơi mật độ dân cư cao nhất, rồi mới tính đến các tuyến vành đai.", "Tạm dừng các dự án kết nối liên vùng để dành toàn bộ vốn cho các dự án chống ngập và chỉnh trang đô thị."], "answer": 1, "exp": "Hoàn thiện đoạn còn thiếu của Vành đai 2 (khoảng 13,75 km) là dự án có tác động lan tỏa: khép kín trục vành đai, phân luồng cho nhiều cửa ngõ, tăng kết nối – phù hợp các tiêu chí giảm ùn tắc, kết nối liên vùng, hiệu quả đầu tư. A trái nguyên tắc “hạn chế đầu tư dàn trải”; C làm tăng áp lực vào lõi đô thị thay vì phân luồng; D bỏ hẳn một tiêu chí ưu tiên (kết nối liên vùng)."}];
+const TOPICS = [
+  {id:'all', name:'Tất cả 20 câu', desc:'Ôn toàn bộ nội dung của bộ đề.'},
+  {id:'lao_dong', name:'Thị trường lao động và việc làm', desc:'Cung – cầu lao động, chỉ tiêu việc làm, xu hướng nghề nghiệp của TP.HCM sau hợp nhất.'},
+  {id:'giao_thong', name:'Hạ tầng giao thông và đô thị', desc:'Metro, vành đai, cao tốc, không gian ngầm, TOD và phân bổ vốn đầu tư.'}
+];
+const LEVELS = {nhan_biet:'Nhận biết', thong_hieu:'Thông hiểu', van_dung:'Vận dụng'};
+const $app = document.getElementById('app');
+// Dán URL Web app của Apps Script (kết thúc bằng /exec) vào đây để bật nút gửi điểm.
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkTeGqfJsCq1smt3naplpv69o3CmSMDBgtfxeaOuiUgroLN5sW8NwctfkC2nQRNaCr1w/exec';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const L = ['A','B','C','D'];
+let cfg = {topic:'all', levels:new Set(Object.keys(LEVELS)), shuffle:false};
+let qs = [], ans = [], cur = 0;
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pool(){return DATA.filter(q => (cfg.topic==='all'||q.topic===cfg.topic) && cfg.levels.has(q.level))}
+
+function themeBtn(){return '<button class="themebtn" id="theme" type="button">Giao diện sáng/tối</button>'}
+function bindTheme(){
+  const b=document.getElementById('theme'); if(!b) return;
+  b.onclick=()=>{const r=document.documentElement;
+    const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+    r.dataset.theme=dark?'light':'dark'};
+}
+
+function renderStart(){
+  const n = pool().length;
+  $app.innerHTML = `
+  <div class="hero">
+    <div class="row spread"><span class="eyebrow">Giáo dục địa phương 12 · TP.HCM</span>${themeBtn()}</div>
+    <h1>Trắc nghiệm ôn tập</h1>
+    <p class="muted">Chọn một đáp án để xem ngay kết quả và lời giải thích. Bộ đề có ${DATA.length} câu, mỗi câu 4 phương án.</p>
+  </div>
+  <div class="card field">
+    <span class="lbl">Chủ đề</span>
+    <div class="opts" role="radiogroup" aria-label="Chủ đề">
+      ${TOPICS.map(t=>`<button type="button" class="choice" role="radio" aria-checked="${cfg.topic===t.id}" data-topic="${t.id}"><span class="dot"></span><span><b>${t.name}</b><span class="muted" style="font-size:.9rem">${t.desc}</span></span></button>`).join('')}
+    </div>
+    <span class="lbl" style="margin-top:8px">Mức độ</span>
+    <div class="chips">
+      ${Object.entries(LEVELS).map(([k,v])=>`<button type="button" class="chip" aria-pressed="${cfg.levels.has(k)}" data-lvl="${k}">${v}</button>`).join('')}
+    </div>
+    <label class="check" style="margin-top:8px"><input type="checkbox" id="shuf" ${cfg.shuffle?'checked':''}> Xáo trộn thứ tự câu hỏi</label>
+  </div>
+  <div class="row spread">
+    <span class="muted" id="cnt">${n} câu sẽ được làm</span>
+    <button class="btn primary" id="go" type="button" ${n?'':'disabled'}>Bắt đầu làm bài</button>
+  </div>`;
+  $app.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{cfg.topic=b.dataset.topic;renderStart()});
+  $app.querySelectorAll('[data-lvl]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.lvl; if(cfg.levels.has(k)){ if(cfg.levels.size>1) cfg.levels.delete(k) } else cfg.levels.add(k); renderStart()});
+  document.getElementById('shuf').onchange=e=>{cfg.shuffle=e.target.checked};
+  document.getElementById('go').onclick=()=>start(pool());
+  bindTheme();
+}
+
+function start(list){
+  qs = cfg.shuffle ? shuffle(list) : list.slice();
+  ans = new Array(qs.length).fill(null); cur = 0; renderQuiz();
+}
+
+function renderQuiz(){
+  const q = qs[cur], a = ans[cur], done = ans.filter(x=>x!==null).length;
+  const correct = ans.filter((x,i)=>x===qs[i].answer).length;
+  const answered = a!==null;
+  $app.innerHTML = `
+  <div class="top">
+    <div class="row spread"><span class="eyebrow">GDĐP 12 · Trắc nghiệm</span>${themeBtn()}</div>
+    <div class="stats"><span>Câu ${cur+1}/${qs.length}</span><span>Đúng ${correct}/${done} câu đã làm</span></div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${qs.length}" aria-valuenow="${done}"><i style="width:${done/qs.length*100}%"></i></div>
+    <div class="nav" aria-label="Chọn câu">
+      ${qs.map((x,i)=>`<button type="button" class="${ans[i]===null?'':(ans[i]===x.answer?'ok':'bad')} ${i===cur?'cur':''}" data-i="${i}" aria-label="Câu ${i+1}">${i+1}</button>`).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <span class="tag lvl-${q.level}">${LEVELS[q.level]}</span>
+    <p class="q">${esc(q.q)}</p>
+    <div class="answers">
+      ${q.opts.map((o,i)=>{
+        let c='',m='';
+        if(answered){ if(i===q.answer){c='right';m='Đáp án đúng'} else if(i===a){c='wrong';m='Bạn chọn'} }
+        return `<button type="button" class="ans ${c}" data-k="${i}" ${answered?'disabled':''}><span class="k">${L[i]}</span><span class="t">${esc(o)}</span>${m?`<span class="m">${m}</span>`:''}</button>`}).join('')}
+    </div>
+    ${answered?`<div class="fb ${a===q.answer?'ok':'bad'}" role="status"><strong>${a===q.answer?'Chính xác':'Chưa đúng, đáp án là '+L[q.answer]}</strong><p>${esc(q.exp)}</p></div>`:''}
+  </div>
+  <div class="row spread">
+    <button class="btn" id="prev" type="button" ${cur===0?'disabled':''}>Câu trước</button>
+    <div class="row">
+      <button class="btn" id="finish" type="button">Nộp bài</button>
+      <button class="btn primary" id="next" type="button" ${cur===qs.length-1?'disabled':''}>Câu tiếp</button>
+    </div>
+  </div>
+  <p class="muted" style="font-size:.85rem">Phím tắt: 1–4 hoặc A–D để chọn đáp án, ← → để chuyển câu.</p>`;
+  $app.querySelectorAll('.ans').forEach(b=>b.onclick=()=>choose(+b.dataset.k));
+  $app.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;renderQuiz()});
+  document.getElementById('prev').onclick=()=>go(-1);
+  document.getElementById('next').onclick=()=>go(1);
+  document.getElementById('finish').onclick=tryFinish;
+  bindTheme();
+}
+function choose(k){ if(ans[cur]!==null) return; ans[cur]=k; renderQuiz();
+  const fb=document.querySelector('.fb'); if(fb) fb.scrollIntoView({block:'nearest',behavior:'smooth'});
+  if(ans.every(x=>x!==null)) setTimeout(()=>{ const f=document.getElementById('finish'); if(f){f.classList.add('primary')} },0) }
+function go(d){ const n=cur+d; if(n>=0&&n<qs.length){cur=n;renderQuiz();window.scrollTo({top:0})} }
+let confirmFinish=false;
+function tryFinish(){
+  const left=ans.filter(x=>x===null).length;
+  if(left && !confirmFinish){ confirmFinish=true; const b=document.getElementById('finish'); b.textContent=`Còn ${left} câu chưa làm. Nộp luôn?`; return }
+  confirmFinish=false; renderResult();
+}
+
+function renderResult(){
+  const total=qs.length, correct=ans.filter((x,i)=>x===qs[i].answer).length, pct=Math.round(correct/total*100);
+  const wrongIdx=qs.map((q,i)=>i).filter(i=>ans[i]!==qs[i].answer);
+  const msg = pct>=90?'Rất vững. Bạn nắm hầu hết nội dung.':pct>=70?'Khá tốt. Xem lại các câu sai để chắc hơn.':pct>=50?'Đạt một nửa. Nên đọc kỹ phần giải thích các câu sai.':'Cần ôn thêm. Làm lại các câu sai sau khi đọc lời giải.';
+  const byLvl = Object.entries(LEVELS).map(([k,v])=>{
+    const ids=qs.map((q,i)=>i).filter(i=>qs[i].level===k); if(!ids.length) return '';
+    const c=ids.filter(i=>ans[i]===qs[i].answer).length;
+    return `<div><span class="muted" style="font-size:.85rem">${v}</span><b>${c}/${ids.length}</b></div>`}).join('');
+  $app.innerHTML = `
+  <div class="row spread"><span class="eyebrow">Kết quả</span>${themeBtn()}</div>
+  <div class="card field">
+    <div class="score"><span class="n">${correct}/${total}</span><span style="font-size:1.4rem;font-weight:700;color:var(--accent)">${pct}%</span></div>
+    <p>${msg}</p>
+    <div class="lv">${byLvl}</div>
+    <div class="row" style="margin-top:6px">
+      <button class="btn primary" id="again" type="button">Làm lại từ đầu</button>
+      <button class="btn" id="redo" type="button" ${wrongIdx.length?'':'disabled'}>Chỉ làm lại ${wrongIdx.length} câu sai</button>
+      <button class="btn" id="home" type="button">Đổi chủ đề</button>
+    </div>
+  </div>
+  ${SCRIPT_URL?`<div class="card field send">
+    <h2>Gửi điểm cho giáo viên</h2>
+    <div class="two">
+      <input id="sname" type="text" placeholder="Họ và tên" autocomplete="name" aria-label="Họ và tên">
+      <input id="sclass" type="text" placeholder="Lớp" aria-label="Lớp">
+    </div>
+    <div class="row"><a id="sendlink" class="btn primary off" href="#" target="_blank" rel="noopener">Gửi điểm</a>
+    <span class="muted" style="font-size:.85rem">Một tab mới sẽ mở và báo đã ghi nhận.</span></div>
+  </div>`:''}
+  <h2>Xem lại bài làm</h2>
+  <div class="rv">
+    ${qs.map((q,i)=>{const a=ans[i],ok=a===q.answer;return `
+    <details ${ok?'':'open'}>
+      <summary><span class="s ${ok?'ok':'bad'}">${i+1}</span><span>${esc(q.q)}</span></summary>
+      <div class="body">
+        <p><b>Bạn chọn:</b> ${a===null?'Chưa trả lời':L[a]+'. '+esc(q.opts[a])}</p>
+        ${ok?'':`<p><b>Đáp án đúng:</b> ${L[q.answer]}. ${esc(q.opts[q.answer])}</p>`}
+        <p class="muted">${esc(q.exp)}</p>
+      </div>
+    </details>`}).join('')}
+  </div>`;
+  document.getElementById('again').onclick=()=>start(qs.slice().sort((a,b)=>a.id-b.id));
+  document.getElementById('redo').onclick=()=>{ const list=wrongIdx.map(i=>qs[i]); qs=list; ans=new Array(list.length).fill(null); cur=0; renderQuiz(); window.scrollTo({top:0}) };
+  document.getElementById('home').onclick=renderStart;
+  const sl=document.getElementById('sendlink');
+  if(sl){
+    const nm=document.getElementById('sname'), cl=document.getElementById('sclass');
+    const topic=(TOPICS.find(t=>t.id===cfg.topic)||{}).name||'';
+    const upd=()=>{
+      const ok=nm.value.trim().length>0; sl.classList.toggle('off',!ok);
+      const p=new URLSearchParams({ten:nm.value.trim(),lop:cl.value.trim(),diem:correct,tong:total,chude:topic,sai:wrongIdx.map(i=>qs[i].id).join(',')});
+      sl.href=ok?SCRIPT_URL+'?'+p.toString():'#';
+    };
+    nm.oninput=upd; cl.oninput=upd; upd();
+  }
+  bindTheme(); window.scrollTo({top:0});
+}
+
+document.addEventListener('keydown',e=>{
+  if(!qs.length||!document.querySelector('.nav')||e.ctrlKey||e.metaKey||e.altKey) return;
+  const k=e.key.toLowerCase(); let i=['1','2','3','4'].indexOf(k); if(i<0) i=['a','b','c','d'].indexOf(k);
+  if(i>=0) choose(i); else if(e.key==='ArrowRight') go(1); else if(e.key==='ArrowLeft') go(-1);
+});
+renderStart();
+</script>
+
+</body></html>
